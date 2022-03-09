@@ -1,6 +1,7 @@
 package br.com.tarcnux.dominio;
 
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
@@ -19,18 +20,28 @@ public class Dev {
 	 * @param bootcamp
 	 */
 	public void inscreverBootcamp(Bootcamp bootcamp) {
-		
+		this.conteudosInscritos.addAll(bootcamp.getConteudos());
+		//Increvendo o Dev no bootcamp
+		bootcamp.getDevsInscritos().add(this);
 	}
 	
 	/**
 	 * A medida que progredir, terá conteúdos concluídos
 	 */
 	public void progredir() {
-		
+		//Pega o primeiro conteúdo - independente se é curso ou mentoria
+		Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
+		if(conteudo.isPresent()) {
+			this.conteudosConcluidos.add(conteudo.get());
+			this.conteudosInscritos.remove(conteudo.get());
+		} else {
+			//Se não tiver mais conteúdo para progredir
+			System.err.println("Você não está matriculado em nenhum conteúdo!");
+		}
 	}
 	
-	public void calcularTotalXp() {
-		
+	public Double calcularTotalXp() {		
+		return this.conteudosConcluidos.stream().mapToDouble(Conteudo::calcularXp).sum();
 	}
 
 	public String getNome() {
