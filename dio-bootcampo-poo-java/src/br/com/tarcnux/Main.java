@@ -26,8 +26,11 @@ public class Main {
 		mentoria.setData(LocalDate.now());
 		
 		System.out.println(curso1);
+		System.out.println("XP curso1: " + curso1.calcularXp());
 		System.out.println(curso2);
+		System.out.println("XP curso2: " + curso2.calcularXp());
 		System.out.println(mentoria);
+		System.out.println("XP mentoria: " + mentoria.calcularXp());
 
 	}
 
